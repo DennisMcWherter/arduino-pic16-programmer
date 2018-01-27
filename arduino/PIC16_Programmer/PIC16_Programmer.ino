@@ -105,7 +105,7 @@ inline void data_high() {
 }
 
 inline void waitClockPeriod() {
-  delayMicroseconds(104);
+  delayMicroseconds(52);
 }
 
 void setup() {
@@ -180,10 +180,9 @@ void loop() {
       // Ensure we're holding clock low if necessary
       delayMicroseconds(100); // minimum 100us delay required
     } else if (thold2) {
-      // Hold the clock low for 2 cycles
+      // Mislabled. thold2 = tdly2. 1us delay.
       thold2 = false;
-      // Ensure we're holding clock low if necessary
-      waitClockPeriod();
+      delayMicroseconds(1);
     } else if (eraseDelay) {
       eraseDelay = false;
       bulkErased = true;
