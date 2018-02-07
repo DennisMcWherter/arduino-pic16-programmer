@@ -16,6 +16,12 @@
 #define SERIAL_CLOCK_PORT 2
 #define SERIAL_DATA_PORT 4
 
+#include "BeginProgCommand.h"
+#include "EndProgCommand.h"
+#include "IncrementAddressCommand.h"
+#include "ReadCommand.h"
+#include "WriteCommand.h"
+
 unsigned short input_data = 0;
 // TODO: Need to make some adjustments to allow for full memory programming. Perhaps a stream-based approach is best here
 // Max size to fit on PIC16F57:
@@ -67,6 +73,8 @@ enum MODE {
   DUMP
 };
 
+ICSPCommand* command = null;
+
 // TODO: Write configuration word before increment.
 MODE mode = WRITE;
 
@@ -111,8 +119,10 @@ inline void waitClockPeriod() {
 void setup() {
   // Enable pins 2 & 4 as output. Pin 2 is clock, pin 4 is data.
   DDRD = 0x14;
-  pinMode(13, OUTPUT);
-  digitalWrite(13, HIGH);
+  pinMode(SERIAL_CLOCK_PORT, OUTPUT);
+  pinMode(SERIAL_DATA_PORT, OUTPUT);
+  pinMode(MCLR_CONTROL_PIN, OUTPUT);
+  digitalWrite(MCLR_CONTROL_PIN, HIGH);
   Serial.begin(9600);
   // Zero out program_data
   for (unsigned i = 0 ; i < sizeof(program_data) / sizeof(short) ; ++i) {
@@ -121,6 +131,20 @@ void setup() {
 }
 
 void loop() {
+  if (failed || done) {
+    start = false;
+  }
+  if (!start && !is_clock_low()) {
+    checkAndToggleStart();
+  } else if (clock_tick()) {
+    const CommandResult& result = command->executeStep();
+    if (result.delayMicros) {
+      delayMicroseconds(result.delayMicros);
+    }
+  }
+}
+
+void oldLoop() {
 //  mclr(HIGH);
 //  return;
   if (failed | done) {
