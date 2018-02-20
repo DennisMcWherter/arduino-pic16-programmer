@@ -16,6 +16,10 @@
 #define SERIAL_CLOCK_PORT 2
 #define SERIAL_DATA_PORT 4
 
+#define PHASE_1 9
+#define PHASE_2 10
+#define MCLR_DIS 11
+
 unsigned short input_data = 0;
 // TODO: Need to make some adjustments to allow for full memory programming. Perhaps a stream-based approach is best here
 // Max size to fit on PIC16F57:
@@ -54,6 +58,11 @@ bool done = false;
 // Upon entering programming mode, currentAddress == 0xfff based on docs.
 short currentAddress = 0xfff;
 
+// Active low pin on the PIC.
+// True = off
+// False = on
+bool MCLR = false;
+
 unsigned long debounce = 0;
 int currentStep = 0;
 
@@ -69,14 +78,6 @@ enum MODE {
 
 // TODO: Write configuration word before increment.
 MODE mode = WRITE;
-
-inline void mclr(unsigned sig) {
-  if (sig == HIGH) {
-    analogWrite(13, 0);
-  } else {
-    digitalWrite(13, HIGH);
-  }
-}
 
 inline bool is_clock_low() {
   return !(PORTD & _BV(SERIAL_CLOCK_PORT));
@@ -105,14 +106,36 @@ inline void data_high() {
 }
 
 inline void waitClockPeriod() {
-  delayMicroseconds(52);
+  delayMicroseconds(104);
+}
+
+// Flip phase switches for charge pump
+inline void flip_phase() {
+  static bool p1_high = true;
+  // MCLR is off
+  if (MCLR) {
+    analogWrite(PHASE_1, 0);
+    analogWrite(PHASE_2, 0);
+    analogWrite(MCLR_DIS, 255);
+    return;
+  }
+  analogWrite(MCLR_DIS, 0);
+  if (p1_high) {
+    analogWrite(PHASE_1, 0);
+    analogWrite(PHASE_2, 255);
+  } else {
+    analogWrite(PHASE_1, 255);
+    analogWrite(PHASE_2, 0);
+  }
+  p1_high = !p1_high;
 }
 
 void setup() {
   // Enable pins 2 & 4 as output. Pin 2 is clock, pin 4 is data.
   DDRD = 0x14;
-  pinMode(13, OUTPUT);
-  digitalWrite(13, HIGH);
+  pinMode(PHASE_1, OUTPUT);
+  pinMode(PHASE_2, OUTPUT);
+  pinMode(MCLR_DIS, OUTPUT);
   Serial.begin(9600);
   // Zero out program_data
   for (unsigned i = 0 ; i < sizeof(program_data) / sizeof(short) ; ++i) {
@@ -120,9 +143,9 @@ void setup() {
   }
 }
 
+bool p1_high = true;
+
 void loop() {
-//  mclr(HIGH);
-//  return;
   if (failed | done) {
     start = false;
   }
@@ -178,11 +201,11 @@ void loop() {
       thold2 = false;
       tprog = false;
       // Ensure we're holding clock low if necessary
-      delayMicroseconds(100); // minimum 100us delay required
+      delayMicroseconds(300); // minimum 100us delay required
     } else if (thold2) {
       // Mislabled. thold2 = tdly2. 1us delay.
       thold2 = false;
-      delayMicroseconds(1);
+      delayMicroseconds(30);
     } else if (eraseDelay) {
       eraseDelay = false;
       bulkErased = true;
@@ -191,6 +214,7 @@ void loop() {
       delay(10); // at least 10 ms delay for bulk erase
     }
   }
+  flip_phase();
   // Kill the remaining cycles to get to roughly 9.6KHz frequency
   waitClockPeriod();
 }
@@ -297,14 +321,14 @@ inline void checkAndToggleStart() {
         Serial.read(); // Throw away buffer bytes
       }
     }
-    mclr(LOW);
+    exitProgrammingMode();
     return;
   }
   if (done) {
     if (!hasResetAfterDone) {
-      mclr(LOW);
+      exitProgrammingMode();
       delay(20);
-      mclr(HIGH);
+      enterProgrammingMode();
       hasResetAfterDone = true;
     }
     return;
@@ -351,11 +375,11 @@ inline void checkAndToggleStart() {
     }
     if (!start) {
       if (!isProgramming) {
-        mclr(LOW);
+        exitProgrammingMode();
       }
     } else {
       if (!done && !failed && isProgramming) {
-        mclr(HIGH);
+        enterProgrammingMode();
       } else if (done) {
         Serial.write(0x02); // Succes
         start = false;
@@ -364,7 +388,7 @@ inline void checkAndToggleStart() {
       }
     }
   } else if (!start && !isProgramming) {
-    mclr(LOW);
+    exitProgrammingMode();
   }
 }
 
@@ -372,12 +396,17 @@ inline void enterProgrammingMode() {
   // Drive clock and data low to re-enter programming mode
   clock_low();
   data_low();
-  // Drive MCLR low for 5 microseconds (transistor will disable)
-  mclr(LOW);
-  delayMicroseconds(5);
-  mclr(HIGH);
-  // Hold clock and data low for 5 microseconds
-  delayMicroseconds(5);
+  // Drive MCLR low for 1ms
+  MCLR = true;
+  flip_phase();
+  delay(1);
+  // Back to high and give a moment to stabilize:
+  MCLR = false;
+  for (unsigned i = 0 ; i < 1000 ; ++i) {
+    flip_phase();
+    delayMicroseconds(100);
+  }
+  // Set state
   initialInc = false;
   currentAddress = 0xfff;
   isProgramming = true;
@@ -590,8 +619,10 @@ inline void resetPC() {
 }
 
 inline void exitProgrammingMode() {
-  mclr(LOW);
-  delay(10);
+  MCLR = true;
+  flip_phase();
+  delay(10); // 10 ms delay
+  isProgramming = false;
 }
 
 inline void sendShort(short value) {
