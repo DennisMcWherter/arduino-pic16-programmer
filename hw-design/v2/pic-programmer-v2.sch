@@ -1,0 +1,430 @@
+EESchema Schematic File Version 2
+LIBS:power
+LIBS:device
+LIBS:switches
+LIBS:relays
+LIBS:motors
+LIBS:transistors
+LIBS:conn
+LIBS:linear
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:valves
+LIBS:modules
+LIBS:pic16f57
+LIBS:pic-programmer-v2-cache
+EELAYER 25 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L C C1
+U 1 1 5A6E8536
+P 2450 2400
+F 0 "C1" H 2475 2500 50  0000 L CNN
+F 1 "10uF" H 2475 2300 50  0000 L CNN
+F 2 "Capacitors_ThroughHole:CP_Radial_D5.0mm_P2.50mm" H 2488 2250 50  0001 C CNN
+F 3 "" H 2450 2400 50  0001 C CNN
+	1    2450 2400
+	1    0    0    -1  
+$EndComp
+$Comp
+L C C2
+U 1 1 5A6E85E3
+P 2950 2400
+F 0 "C2" H 2975 2500 50  0000 L CNN
+F 1 "10uF" H 2975 2300 50  0000 L CNN
+F 2 "Capacitors_ThroughHole:CP_Radial_D5.0mm_P2.50mm" H 2988 2250 50  0001 C CNN
+F 3 "" H 2950 2400 50  0001 C CNN
+	1    2950 2400
+	1    0    0    -1  
+$EndComp
+$Comp
+L C C3
+U 1 1 5A6E86A4
+P 3550 2400
+F 0 "C3" H 3575 2500 50  0000 L CNN
+F 1 "10uF" H 3575 2300 50  0000 L CNN
+F 2 "Capacitors_ThroughHole:CP_Radial_D5.0mm_P2.50mm" H 3588 2250 50  0001 C CNN
+F 3 "" H 3550 2400 50  0001 C CNN
+	1    3550 2400
+	1    0    0    -1  
+$EndComp
+$Comp
+L D D1
+U 1 1 5A6E8796
+P 2200 1950
+F 0 "D1" H 2200 2050 50  0000 C CNN
+F 1 "1N4148" H 2200 1850 50  0000 C CNN
+F 2 "Diodes_ThroughHole:D_DO-35_SOD27_P10.16mm_Horizontal" H 2200 1950 50  0001 C CNN
+F 3 "" H 2200 1950 50  0001 C CNN
+	1    2200 1950
+	-1   0    0    1   
+$EndComp
+$Comp
+L D D2
+U 1 1 5A6E8821
+P 2700 1950
+F 0 "D2" H 2700 2050 50  0000 C CNN
+F 1 "1N4148" H 2700 1850 50  0000 C CNN
+F 2 "Diodes_ThroughHole:D_DO-35_SOD27_P10.16mm_Horizontal" H 2700 1950 50  0001 C CNN
+F 3 "" H 2700 1950 50  0001 C CNN
+	1    2700 1950
+	-1   0    0    1   
+$EndComp
+$Comp
+L D D3
+U 1 1 5A6E8859
+P 3200 1950
+F 0 "D3" H 3200 2050 50  0000 C CNN
+F 1 "1N4148" H 3200 1850 50  0000 C CNN
+F 2 "Diodes_ThroughHole:D_DO-35_SOD27_P10.16mm_Horizontal" H 3200 1950 50  0001 C CNN
+F 3 "" H 3200 1950 50  0001 C CNN
+	1    3200 1950
+	-1   0    0    1   
+$EndComp
+$Comp
+L D D4
+U 1 1 5A6E97BC
+P 2800 1400
+F 0 "D4" H 2800 1500 50  0000 C CNN
+F 1 "1N4148" H 2800 1300 50  0000 C CNN
+F 2 "Diodes_ThroughHole:D_DO-35_SOD27_P10.16mm_Horizontal" H 2800 1400 50  0001 C CNN
+F 3 "" H 2800 1400 50  0001 C CNN
+	1    2800 1400
+	-1   0    0    1   
+$EndComp
+Text GLabel 1700 1950 0    60   Input ~ 0
+Vdd
+Text GLabel 1700 2550 0    60   Input ~ 0
+Pin9
+Text GLabel 1700 2750 0    60   Input ~ 0
+Pin10
+$Comp
+L GNDREF #PWR01
+U 1 1 5A6E991D
+P 3550 2700
+F 0 "#PWR01" H 3550 2450 50  0001 C CNN
+F 1 "GNDREF" H 3550 2550 50  0000 C CNN
+F 2 "" H 3550 2700 50  0001 C CNN
+F 3 "" H 3550 2700 50  0001 C CNN
+	1    3550 2700
+	1    0    0    -1  
+$EndComp
+Text GLabel 3850 1950 2    60   Output ~ 0
+~MCLR
+$Comp
+L Arduino_UNO_R3 A1
+U 1 1 5A7B0DD2
+P 6100 3300
+F 0 "A1" H 5900 4350 50  0000 R CNN
+F 1 "Arduino_UNO_R3" H 5900 4250 50  0000 R CNN
+F 2 "Modules:Arduino_UNO_R3" H 6250 2250 50  0001 L CNN
+F 3 "" H 5900 4350 50  0001 C CNN
+	1    6100 3300
+	1    0    0    -1  
+$EndComp
+Text GLabel 5450 3700 0    60   Output ~ 0
+Pin10
+Text GLabel 5450 3800 0    60   Output ~ 0
+Pin11
+Text GLabel 6300 2150 1    60   Output ~ 0
+Vdd
+Text GLabel 5450 2900 0    60   Output ~ 0
+ICSP_CLK
+Text GLabel 5450 3100 0    60   BiDi ~ 0
+ICSP_DAT
+$Comp
+L GNDREF #PWR02
+U 1 1 5A7B1271
+P 6100 4650
+F 0 "#PWR02" H 6100 4400 50  0001 C CNN
+F 1 "GNDREF" H 6100 4500 50  0000 C CNN
+F 2 "" H 6100 4650 50  0001 C CNN
+F 3 "" H 6100 4650 50  0001 C CNN
+	1    6100 4650
+	1    0    0    -1  
+$EndComp
+$Comp
+L PIC16F57-I/P U1
+U 1 1 5A7B14A1
+P 2900 4800
+F 0 "U1" H 3000 5750 50  0000 L CNN
+F 1 "PIC16F57-I/P" H 3000 5650 50  0000 L CNN
+F 2 "Housings_DIP:DIP-28_W15.24mm_Socket_LongPads" H 2850 4850 50  0001 C CIN
+F 3 "" H 2850 4850 50  0001 C CNN
+	1    2900 4800
+	1    0    0    -1  
+$EndComp
+Text GLabel 3900 5250 2    60   BiDi ~ 0
+ICSP_DAT
+Text GLabel 3900 5350 2    60   Input ~ 0
+ICSP_CLK
+Text GLabel 3900 4100 2    60   Input ~ 0
+~MCLR
+Text GLabel 1800 4150 0    60   Input ~ 0
+Vdd
+$Comp
+L GNDREF #PWR03
+U 1 1 5A7B178C
+P 1650 4500
+F 0 "#PWR03" H 1650 4250 50  0001 C CNN
+F 1 "GNDREF" H 1650 4350 50  0000 C CNN
+F 2 "" H 1650 4500 50  0001 C CNN
+F 3 "" H 1650 4500 50  0001 C CNN
+	1    1650 4500
+	1    0    0    -1  
+$EndComp
+Text Notes 1450 1350 0    60   ~ 0
+MCLR Charge Pump
+Text Notes 2500 5850 0    60   ~ 0
+PIC16F57 Chip In-Circuit for Programming\n
+Text Notes 6100 5400 0    60   ~ 0
+Off-chip Arduino\n
+$Comp
+L R R1
+U 1 1 5A7D0C77
+P 2050 2550
+F 0 "R1" V 2130 2550 50  0000 C CNN
+F 1 "1k" V 2050 2550 50  0000 C CNN
+F 2 "Resistors_ThroughHole:R_Axial_DIN0204_L3.6mm_D1.6mm_P7.62mm_Horizontal" V 1980 2550 50  0001 C CNN
+F 3 "" H 2050 2550 50  0001 C CNN
+	1    2050 2550
+	0    1    1    0   
+$EndComp
+$Comp
+L R R2
+U 1 1 5A7D0D16
+P 2450 2750
+F 0 "R2" V 2530 2750 50  0000 C CNN
+F 1 "1k" V 2450 2750 50  0000 C CNN
+F 2 "Resistors_ThroughHole:R_Axial_DIN0204_L3.6mm_D1.6mm_P7.62mm_Horizontal" V 2380 2750 50  0001 C CNN
+F 3 "" H 2450 2750 50  0001 C CNN
+	1    2450 2750
+	0    1    1    0   
+$EndComp
+$Comp
+L PN2222A Q1
+U 1 1 5A7D1038
+P 3150 3000
+F 0 "Q1" H 3350 3075 50  0000 L CNN
+F 1 "PN2222A" H 3350 3000 50  0000 L CNN
+F 2 "TO_SOT_Packages_THT:TO-92_Molded_Narrow" H 3350 2925 50  0001 L CIN
+F 3 "" H 3150 3000 50  0001 L CNN
+	1    3150 3000
+	1    0    0    -1  
+$EndComp
+Text GLabel 1700 3000 0    60   Input ~ 0
+Pin11
+$Comp
+L GNDREF #PWR01
+U 1 1 5A7D1291
+P 3250 3300
+F 0 "#PWR01" H 3250 3050 50  0001 C CNN
+F 1 "GNDREF" H 3250 3150 50  0000 C CNN
+F 2 "" H 3250 3300 50  0001 C CNN
+F 3 "" H 3250 3300 50  0001 C CNN
+	1    3250 3300
+	1    0    0    -1  
+$EndComp
+$Comp
+L R R3
+U 1 1 5A7D1448
+P 2400 3000
+F 0 "R3" V 2480 3000 50  0000 C CNN
+F 1 "4k" V 2400 3000 50  0000 C CNN
+F 2 "Resistors_ThroughHole:R_Axial_DIN0204_L3.6mm_D1.6mm_P7.62mm_Horizontal" V 2330 3000 50  0001 C CNN
+F 3 "" H 2400 3000 50  0001 C CNN
+	1    2400 3000
+	0    1    1    0   
+$EndComp
+$Comp
+L R R4
+U 1 1 5A7D1D76
+P 3250 2400
+F 0 "R4" V 3330 2400 50  0000 C CNN
+F 1 "1.2k" V 3250 2400 50  0000 C CNN
+F 2 "Resistors_ThroughHole:R_Axial_DIN0204_L3.6mm_D1.6mm_P7.62mm_Horizontal" V 3180 2400 50  0001 C CNN
+F 3 "" H 3250 2400 50  0001 C CNN
+	1    3250 2400
+	1    0    0    -1  
+$EndComp
+NoConn ~ 3700 4300
+NoConn ~ 3700 4200
+NoConn ~ 3700 4450
+NoConn ~ 3700 4550
+NoConn ~ 3700 4650
+NoConn ~ 3700 4750
+NoConn ~ 3700 4850
+NoConn ~ 3700 4950
+NoConn ~ 3700 5050
+NoConn ~ 3700 5150
+NoConn ~ 3700 5450
+NoConn ~ 2000 5400
+NoConn ~ 2000 5300
+NoConn ~ 2000 5200
+NoConn ~ 2000 5100
+NoConn ~ 2000 5000
+NoConn ~ 2000 4850
+NoConn ~ 2000 4750
+NoConn ~ 2000 4650
+NoConn ~ 2000 4550
+NoConn ~ 6600 4100
+NoConn ~ 6600 4000
+NoConn ~ 6200 4400
+NoConn ~ 6000 4400
+NoConn ~ 6200 2300
+NoConn ~ 6000 2300
+NoConn ~ 6600 2700
+NoConn ~ 6600 2900
+NoConn ~ 6600 3100
+NoConn ~ 6600 3300
+NoConn ~ 6600 3400
+NoConn ~ 6600 3500
+NoConn ~ 6600 3600
+NoConn ~ 6600 3700
+NoConn ~ 6600 3800
+Wire Wire Line
+	3250 2550 3250 2800
+Wire Wire Line
+	3250 2250 3250 2150
+Wire Wire Line
+	2250 3000 1700 3000
+Wire Wire Line
+	3250 3200 3250 3300
+Wire Wire Line
+	3250 2150 3550 2150
+Wire Wire Line
+	2950 2750 2600 2750
+Wire Wire Line
+	1700 2750 2300 2750
+Wire Wire Line
+	1900 2550 1700 2550
+Wire Wire Line
+	2450 2550 2200 2550
+Wire Notes Line
+	4800 5450 4800 1900
+Wire Notes Line
+	6950 5450 4800 5450
+Wire Notes Line
+	6950 1900 6950 5450
+Wire Notes Line
+	4800 1900 6950 1900
+Wire Notes Line
+	1500 3700 1550 3700
+Wire Notes Line
+	1300 6000 1300 3700
+Wire Notes Line
+	4550 6000 1300 6000
+Wire Notes Line
+	4550 3700 4550 6000
+Wire Notes Line
+	1300 3700 4550 3700
+Wire Notes Line
+	1300 1200 1300 1550
+Wire Notes Line
+	1300 1200 4300 1200
+Wire Notes Line
+	1300 1500 1300 3550
+Wire Wire Line
+	3700 4100 3900 4100
+Connection ~ 1900 4150
+Wire Wire Line
+	1900 4050 2000 4050
+Wire Wire Line
+	1900 4150 1900 4050
+Wire Wire Line
+	1800 4150 2000 4150
+Wire Wire Line
+	1650 4350 1650 4500
+Wire Wire Line
+	2000 4350 1650 4350
+Wire Wire Line
+	3700 5350 3900 5350
+Wire Wire Line
+	3700 5250 3900 5250
+Wire Wire Line
+	6100 4400 6100 4650
+Wire Wire Line
+	5600 3100 5450 3100
+Wire Wire Line
+	5600 2900 5450 2900
+Wire Wire Line
+	6300 2300 6300 2150
+Wire Wire Line
+	5600 3800 5450 3800
+Wire Wire Line
+	5600 3700 5450 3700
+Wire Wire Line
+	2950 2550 2950 2750
+Connection ~ 2950 1950
+Wire Wire Line
+	2950 2250 2950 1950
+Connection ~ 2450 1950
+Wire Wire Line
+	2450 2250 2450 1950
+Connection ~ 1900 1950
+Wire Wire Line
+	1900 1400 1900 1950
+Wire Wire Line
+	2850 1950 3050 1950
+Wire Wire Line
+	2350 1950 2550 1950
+Wire Wire Line
+	2050 1950 1700 1950
+Wire Wire Line
+	3550 1400 3550 2250
+Wire Wire Line
+	3350 1950 3850 1950
+Connection ~ 3550 1950
+Connection ~ 3550 2150
+Wire Wire Line
+	2950 1400 3550 1400
+Wire Wire Line
+	2650 1400 1900 1400
+Wire Notes Line
+	4300 1200 4300 3450
+Wire Wire Line
+	2550 3000 2950 3000
+Wire Notes Line
+	1300 3550 4300 3550
+Wire Notes Line
+	4300 3550 4300 3400
+Wire Wire Line
+	3550 2550 3550 2700
+Text GLabel 5450 3600 0    60   Output ~ 0
+Pin9
+Wire Wire Line
+	5600 3600 5450 3600
+$EndSCHEMATC
